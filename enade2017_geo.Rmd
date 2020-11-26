@@ -5,7 +5,6 @@ output: "html_document"
 theme: "paper"
 ---
 ```{r setup, include=FALSE}
-setwd("C:/Users/Lavo/Desktop/Pós - Ciencia de Dados/03 Análise Estatística de Dados/Projeto Final/Meu Projeto") 
 library(tidyverse)
 library(plotly)
 library(e1071)
