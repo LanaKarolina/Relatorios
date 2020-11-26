@@ -31,11 +31,11 @@ head(bd)
 ##### Faremos então uma apresentação das variáveis presentes nos dados, com suas respectivas classificações quanto ao tipo de variável, bem como as medidas descritivas de todas elas.
 
 ```{r}
-describe(bd$NT_OBJ_FG) # nota bruta da formação geral (quantitativo continuo)
-describe(bd$CO_GRUPO) # codigo do curso (quantitativo discreto)
-describe(bd$CO_REGIAO_CURSO) # codigo da regiao do curso (quantitativo discreto)
-describe(bd$QE_I02) # etnia do estudante (qualitativo nominal)
-describe(bd$CO_TURNO_GRADUACAO) # codigo do turno do curso (quantitativo discreto)
+describe(bd$NT_OBJ_FG) # nota bruta da formação geral (quantitativa contínua)
+describe(bd$CO_GRUPO) # codigo do curso (qualitativa nominal)
+describe(bd$CO_REGIAO_CURSO) # codigo da regiao do curso (qualitativa nominal)
+describe(bd$QE_I02) # etnia do estudante (qualitativa nominal)
+describe(bd$CO_TURNO_GRADUACAO) # codigo do turno do curso (qualitativa nominal)
 ```
 
 ### Análise Estatística dos Dados
