@@ -59,7 +59,7 @@ bd %>% select(NT_GER)%>%
             Curtose=kurtosis(NT_GER),Minimo=min(NT_GER),Maximo=max(NT_GER)) %>% arrange(desc(Quantidade)) %>% formattable()
 ```
 
-##### Podemos perceber que a média das notas dos alunos está um pouco abaixo da nota média da prova (**Média = 45,4**), pois a nota pode variar de 0 a 98,10; 50% dos alunos tiraram notas um pouco inferiores em relação a média (**Mediana = 45,1**); e nenhum aluno tirou a nota máxima do exame (**Máximo = 95,4**). Em relação a disposição dos dados, percebemos pelo coeficiente de assimetria e curtose que se trata de uma amostra com assimetria negativa e de distribuição platicúrtica (**-0,02 e -0,34, respectivamente**)
+##### Podemos perceber que a média das notas dos alunos está um pouco abaixo da nota média da prova (**Média = 45,4**), pois a nota pode variar de 0 a 100; 50% dos alunos tiraram notas um pouco inferiores em relação a média (**Mediana = 45,1**); e nenhum aluno tirou a nota máxima do exame (**Máximo = 95,4**). Em relação a disposição dos dados, percebemos pelo coeficiente de assimetria e curtose que se trata de uma amostra com assimetria negativa e de distribuição platicúrtica (**-0,02 e -0,34, respectivamente**)
 
 ```{r, echo=FALSE}
 bd %>% ggplot(aes(x=NT_GER)) + 
@@ -83,7 +83,7 @@ bd %>% select(Turno,NT_GER) %>% group_by(Turno) %>%
 
 ##### Percebemos que o turno com maior quantidade de alunos é o Noturno. O turno da Tarde aparece 3 vezes pois o turno apresenta 3 notas mais frequentemente (**Moda**). 
 ##### O turno com melhor desempenho na prova foi o Integral (**Média = 46,41**) e cerca de 50% dos alunos obtiveram nota superior à Média (**Moda = 46,45**).
-##### De acordo com os dados podemos ver que existe indícios de que as notas não se diferenciam significativamente entre os cursos. 
+##### De acordo com os dados podemos ver que existe indícios de que as notas não se diferenciam significativamente entre os turnos. 
 
 ##### Para confirmar se essa diferença de fato não existe, vamos fazer um Teste de Hipóteses Não Paramétrico (usado quando não sabemos qual é a distribuição dos dados), pois sabemos que não se trata de uma Distribuição Normal (**Moda $\neq$ Media $\neq$ Moda**).
 
@@ -94,7 +94,7 @@ shapiro.test(sample(teste1$NT_GER,5000)) # nao eh normal
 kruskal.test(teste1$NT_GER~teste1$Turno)
 ```
 
-##### O teste de normalidade de Shapiro-Wilk rejeitou a hipótese de que a distribuição dos dados seja Normal (**Valor-P < 0,01%**). Então foi feito o teste não paramétrico Kruskal-Wallis de semelhança de grupos, em que não rejeitou-se a hipótese de que os turnos sejam semelhantes quanto a nota geral dos alunos (**Valor-P = 22,02%**). Esses testes levaram em consideração um nível de significância ($\alpha$) de 5%.
+##### O teste de normalidade de Shapiro-Wilk rejeitou a hipótese de que a distribuição dos dados seja Normal (**Valor-P < 0,01%**). Então foi feito o teste não paramétrico Kruskal-Wallis de semelhança de grupos, que não rejeitou a hipótese de que os turnos sejam semelhantes quanto a nota geral dos alunos (**Valor-P = 22,02%**). Esses testes levaram em consideração um nível de significância ($\alpha$) de 5%.
 
 ##### Faremos a seguir uma análise cruzada do Sexo e Turno.
 
@@ -111,7 +111,7 @@ df2 %>% ggplot(aes(x=Turno,y=freq_relativa,fill=Sexo))+
   ggtitle("Frequência dos Alunos de Geografia Licenciatura por Turno e Sexo")
 ```
 
-##### O gráfico acima mostra a frequência relativa dos alunos quanto ao sexo e a turma. Notamos haver indícios de associação entre os grupos, pois os turno se comportam de forma semelhante em ambos os sexos, mas para comprovar a análise empírica faremos o teste não paramétrico Qui-quadrado de Pearson, indicado para casos em que as variáveis envolvidas sejam categóricas e estejam dispostas em uma tabela de contingência.
+##### O gráfico acima mostra a frequência relativa dos alunos quanto ao sexo e o turno. Notamos haver indícios de associação entre os grupos, pois os turnos se comportam de forma semelhante em ambos os sexos, mas para comprovar a análise empírica faremos o teste não paramétrico Qui-quadrado de Pearson, indicado para casos em que as variáveis envolvidas sejam categóricas e estejam dispostas em uma tabela de contingência.
 
 ```{r, echo=FALSE}
 t4=table(bd$Turno,bd$Sexo)
@@ -169,14 +169,14 @@ df4 %>% ggplot(aes(x=Turno,y=freq_relativa,fill=Regiao))+
   ggtitle("Frequência dos Alunos de Geografia Licenciatura por Turno e Região")
 ```
 
-##### Vemos que há índicios de que a região Norte aparentemente não está associada ao turno, pois nos turnos Matutino e Noturno a frequência dos alunos é bem parecida. Entretanto para tirarmos alguma conclusão vamos fazer o teste Qui-quadrado novamente, por se tratar de variáveis categóricas.
+##### Percebemos que os turnos se comportam de forma bastante parecida em cada uma das regiões, exceto pela região Norte, pois os turnos da manhã e noite são bem semelhantes quanto a frequência dos alunos. Para tirarmos a conclusão sobre a existência de associação entre os turnos e as regiões faremos novamente o teste Qui-quadrado.
 
 ```{r, echo=FALSE}
 t5=table(bd$Turno,bd$Regiao)
 chisq.test(t5)
 ```
 
-##### Concluímos que, a 5% de significância as regiões estão associadas aos turnos em que os alunos estão matriculados. Isso nos leva a crer que a região Norte e os turnos Manhã e Noite, nesta região, não tenha impactado significantemente o resultado do teste.
+##### Concluímos que, a 5% de significância as regiões estão associadas aos turnos em que os alunos estão matriculados.
 
 ##### A seguir uma análise das regiões dos alunos em relação a nota que eles obtiveram no exame.
 
@@ -214,8 +214,10 @@ kruskal.test(teste1$NT_GER~teste1$Regiao)
 ### Conclusão
 
 ##### Portanto, ao fazermos uso das análises estatísticas vistas anteriormente, temos os seguintes *insights*:
-##### - O turno de melhor desempenho na nota geral é o Integral. 
+##### - O turno com melhor desempenho dos alunos, de um modo geral, é o Integral. 
+##### - Os homens, de um modo geral, possuem as melhores notas.
+##### - A região com melhor desempenho dos alunos, de um modo geral, é a região Sudeste.
 ##### - Os alunos, independetemente do sexo, deram preferência ao turno da noite.
-##### - Somente a região Norte fugiu do padrão de possuir a maior quantidade de alunos no turno da Noite, pois há uma semelhança na frequência de alunos tanto no turno Matutino como no Noturno.
+##### - Os alunos, independente da região que vivem, estudam preferencialmente no turno da noite.
 ##### - O sexo do aluno não influencia na escolha do turno em que se deseja estudar, bem como a região que ele habita.
-##### - A nota geral dos alunos depende tanto do sexo do aluno como da região que ele habita.
+##### - A nota geral dos alunos depende tanto do sexo do aluno quanto da região em que vive.
